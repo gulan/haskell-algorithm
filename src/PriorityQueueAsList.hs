@@ -1,12 +1,8 @@
-module PriorityQueueAsList (PQueue, newPQ, isEmptyPQ, enPQ, dePQ, frontPQ) where
+module PriorityQueueAsList
+  (PQueue, newPQ, isEmptyPQ, enPQ, dePQ, frontPQ)
+where
 
 import Data.List (insert)
-
--- |
--- >>> enPQ 3 new 
--- PQ [3]
--- >>> frontPQ $ enPQ 7 $ enPQ 3 $ enPQ 5 newPQ
--- 3
 
 newtype PQueue a = PQ [a] deriving Show
 

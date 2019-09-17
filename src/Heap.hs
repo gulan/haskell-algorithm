@@ -1,5 +1,6 @@
-module Heap where
--- module Heap (Heap, emptyHeap, isHeapEmpty, findHeap, insHeap, delHeap) where
+module Heap
+  (Heap, emptyHeap, isHeapEmpty, findHeap, insHeap, delHeap)
+where
 
 emptyHeap   :: (Ord a) => Heap a
 isHeapEmpty :: (Ord a) => Heap a -> Bool

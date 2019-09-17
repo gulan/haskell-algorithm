@@ -1,4 +1,6 @@
-module TableAsList (Table, new, find, update) where
+module TableAsList
+  (Table, new, find, update)
+where
 
 newtype Table a b = T [(b,a)] deriving Show
 

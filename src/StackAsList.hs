@@ -1,11 +1,16 @@
-module StackAsList (Stack, push, pop, top, newStack, isEmptyStack) where
+module StackAsList
+  (Stack, push, pop, top, newStack, isEmptyStack)
+where
 
 newtype Stack a = S [a]
 
 instance (Show a) => Show (Stack a) where
   showsPrec _ (S []) str = showChar '-' str
   showsPrec _ (S (x:xs )) str = shows x (showChar '|' (shows (S xs) str))
-
+  
+instance (Eq a) => Eq (Stack a) where
+  (S xs) == (S ys) = xs == ys
+  
 push         :: a -> Stack a -> Stack a
 pop          :: Stack a -> Stack a
 top          :: Stack a -> a

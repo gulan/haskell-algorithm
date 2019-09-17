@@ -1,4 +1,6 @@
-module AdjacencyArrayGraph where
+module AdjacencyArrayGraph
+  (Graph, adjacent, edgeIn, edgesD, edgesU, mkGraph, nodes, weight)
+where
 
 import Data.Ix
 import Data.Array

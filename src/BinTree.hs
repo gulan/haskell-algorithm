@@ -1,5 +1,6 @@
-module BinTree (addTree,buildTree,delTree,emptyTree,inTree,inorder) where
--- module BinTree where
+module BinTree
+  (BinTree, addTree,buildTree,delTree,emptyTree,inTree,inorder)
+where
 
 import Data.List (nub, sort)
 
@@ -10,7 +11,8 @@ emptyTree :: (Ord a, Show a) => BinTree a
 inTree    :: (Ord a, Show a) => a -> BinTree a -> Bool
 inorder   :: (Ord a, Show a) => BinTree a -> [a]
 
-data BinTree a = E | N a (BinTree a) (BinTree a) deriving Show
+data BinTree a = E | N a (BinTree a) (BinTree a)
+  deriving Show
 
 addTree v E  = N v E E
 addTree v (N w lf rt) | v == w = N v lf rt

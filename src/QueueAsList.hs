@@ -1,4 +1,6 @@
-module QueueAsList (Queue, newQueue, isEmptyQueue, enqueue, dequeue, front) where
+module QueueAsList
+  (Queue, newQueue, isEmptyQueue, enqueue, dequeue, front)
+where
 
 -- Public
 newQueue     :: Queue a

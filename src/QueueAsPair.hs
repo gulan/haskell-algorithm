@@ -1,4 +1,6 @@
-module QueueAsPair (Queue, newQueue, isEmptyQueue, enqueue, dequeue, front) where
+module QueueAsPair
+  (Queue, newQueue, isEmptyQueue, enqueue, dequeue, front)
+where
 
 newQueue     :: Queue a
 isEmptyQueue :: Queue a -> Bool
@@ -28,5 +30,6 @@ dequeue (Q ([],ys)) = Q (tail (reverse ys), [])
 dequeue (Q (x:xs, ys)) = Q (xs,ys)
 
 front (Q ([],[])) = error "queue empty"
+front (Q ([],ys)) = last ys
 front (Q (x:_,_)) = x
   

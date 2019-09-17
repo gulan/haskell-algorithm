@@ -1,4 +1,6 @@
-module TableAsFunction (Table, new, find, update) where
+module TableAsFunction
+  (Table, new, find, update)
+where
 
 new     :: (Eq b) => [(b,a)] -> Table a b
 find    :: (Eq b) => Table a b -> b -> a
