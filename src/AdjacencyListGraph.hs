@@ -13,35 +13,34 @@ mkGraph       :: Bool -> (Int, Int) -> [(Int, Int, Int)] -> Graph
 nodes         :: Graph -> [Int]
 weight        :: Int -> Int -> Graph -> Int
 
-type Pair   = (Int,Int)
-type PList  = [Pair]
-type Graph  = [(Int,PList)]
+type Pair      = (Int,Int)
+type PList     = [Pair]
+newtype Graph  = G [(Int,PList)] deriving Show
 
 -- Test data:
 g' :: Graph
-g' = [
-  (1, [(2,12),(3,34),(5,78)]),
-  (2, [(1,0),(4,55),(5,32)]),
-  (3, [(4,61), (5,44)]),
-  (4, [(5,93)])]
+g' = G [(1, [(2,12),(3,34),(5,78)]),
+        (2, [(1,0),(4,55),(5,32)]),
+        (3, [(4,61), (5,44)]),
+        (4, [(5,93)])]
 
 es' = edgesD g'
 
 -- Implementation
-adjacent gr j   = [k | (i,xs) <- gr, i == j, (k,_) <- xs]
-nodes           = map fst
-edgeIn gr (x,y) = 1 == length [() | (x',y',_) <- edgesD gr, x==x', y==y']
-edgesD gr       = [(i,k,w) | (i,xs) <- gr, (k,w) <- xs]
-edgesU gr       = [(x,y,w) | (x,y,w) <- edgesD gr, x < y]
-weight x y g    = head [w | (i,j,w) <- edgesD g, i==x, j==y]
+adjacent (G ns) j = [k | (i,xs) <- ns, i == j, (k,_) <- xs]
+nodes (G ns)      = map fst ns
+edgeIn g (x,y)    = 1 == length [() | (x',y',_) <- edgesD g, x==x', y==y']
+edgesD (G ns)     = [(i,k,w) | (i,xs) <- ns, (k,w) <- xs]
+edgesU g          = [(x,y,w) | (x,y,w) <- edgesD g, x < y]
+weight x y g      = head [w | (i,j,w) <- edgesD g, i==x, j==y]
 
 mkGraph dir _ es =
   let p = pipe es
-      q = pipe [(y,x,w) | (x,y,w) <- es, x /= y]
+      q = case dir of
+        False -> []
+        True  -> pipe [(y,x,w) | (x,y,w) <- es, x /= y]
   in
-    p ++ case dir of
-           False -> []
-           True -> q
+    G (p ++ q)
 
 -- Helpers:
 x |> f = f x
