@@ -47,3 +47,74 @@ inTree v (N w lf rt) | v == w = True
 
 inorder E  = []
 inorder (N v lf rt) = inorder lf ++ [v] ++ inorder rt
+
+preorder E  = []
+preorder (N v lf rt) = [v] ++ preorder lf ++ preorder rt
+
+postorder E  = []
+postorder (N v lf rt) = preorder lf ++ preorder rt ++ [v]
+
+-- |
+-- >>> addTree 5 $ addTree 3 emptyTree
+-- N 3 E (N 5 E E)
+-- >>> addTree 7 $ addTree 5 $ addTree 3 emptyTree
+-- N 3 E (N 5 E (N 7 E E))
+-- >>> addTree 3 $ addTree 5 $ addTree 7 emptyTree
+-- N 7 (N 5 (N 3 E E) E) E
+-- >>> buildTree [3,5,7]
+-- N 5 (N 3 E E) (N 7 E E)
+-- >>> buildTree [3,5]
+-- N 5 (N 3 E E) E
+-- >>> addTree 3 $ addTree 5 emptyTree
+-- N 5 (N 3 E E) E
+-- >>> buildTree [5,3]
+-- N 5 (N 3 E E) E
+-- >>> addTree 5 $ addTree 3 emptyTree
+-- N 3 E (N 5 E E)
+-- >>> buildTree [1,2,3]
+-- N 2 (N 1 E E) (N 3 E E)
+-- >>> buildTree [3,2,1]
+-- N 2 (N 1 E E) (N 3 E E)
+-- >>> addTree 1 $ addTree 2 emptyTree
+-- N 2 (N 1 E E) E
+-- >>> foldr addTree emptyTree [1,2,3]
+-- N 3 (N 2 (N 1 E E) E) E
+-- >>> foldr addTree emptyTree [1,3,2]
+-- N 2 (N 1 E E) (N 3 E E)
+-- >>> foldr addTree emptyTree [2,3,1]
+-- N 1 E (N 3 (N 2 E E) E)
+-- >>> foldr addTree emptyTree [3,2,1]
+-- N 1 E (N 2 E (N 3 E E))
+-- >>> inorder $ foldr addTree emptyTree [3,2,1]
+-- [1,2,3]
+-- >>> inorder $ foldr addTree emptyTree [1,2,3]
+-- [1,2,3]
+-- >>> inorder $ foldr addTree emptyTree [1,2,1]
+-- [1,2]
+-- >>> inorder $ foldr addTree emptyTree [1,3,2]
+-- [1,2,3]
+-- >>> import Data.List
+-- >>> (length . nub . fmap (inorder . buildTree) . permutations) [1..3]
+-- 1
+-- >>> (length . nub . permutations) [1..3]
+-- 6
+
+-- |
+-- >>> inTree 6 $ buildTree [2,4..8]
+-- True
+-- >>> inTree 2 $ buildTree [2,4..8]
+-- True
+-- >>> inTree 8 $ buildTree [2,4..8]
+-- True
+-- >>> inTree 5 $ buildTree [2,4..8]
+-- False
+-- >>> delTree 2 $ buildTree [2,4..8]
+-- N 6 (N 4 E E) (N 8 E E)
+-- >>> delTree 8 $ delTree 2 $ buildTree [2,4..8]
+-- N 6 (N 4 E E) E
+-- >>> delTree 6 $ delTree 8 $ delTree 2 $ buildTree [2,4..8]
+-- N 4 E E
+-- >>> delTree 4 $ delTree 6 $ delTree 8 $ delTree 2 $ buildTree [2,4..8]
+-- E
+-- >>> delTree 2 emptyTree 
+-- E

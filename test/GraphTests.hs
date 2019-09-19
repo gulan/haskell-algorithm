@@ -36,8 +36,29 @@ count g = length $ edgesD g
 propChain :: Int -> Int -> Property
 propChain = \i j -> j > i ==> count (chain i j) + 1 == count (ring i j)
 
+{-
+adjacent      :: Graph -> Int -> [Int]
+edgeIn        :: Graph -> (Int,Int) -> Bool
+edgesD        :: Graph -> [(Int, Int, Int)]
+edgesU        :: Graph -> [(Int, Int, Int)]
+mkGraph       :: Bool -> (Int, Int) -> [(Int, Int, Int)] -> Graph
+nodes         :: Graph -> [Int]
+weight        :: Int -> Int -> Graph -> Int
+-}
+
 graphTests = do
-  
+
+  describe "single node" $ do
+    let g = mkGraph False (1,2) [(1,2,10)]
+    describe "adjacent" $ do
+      it "unknown"    $ do adjacent g 0 `shouldBe` []
+      it "good"       $ do adjacent g 1 `shouldBe` [2]
+      it "from range" $ do adjacent g 2 `shouldBe` []
+      -- nodes g      `shouldBe` [1]
+      -- edgesD g     `shouldBe` [(1,2,10)]
+      -- edgesU g     `shouldBe` [(1,2,10)]
+      -- weight 1 2 g `shouldBe` 10
+        
   describe "Adjacency List Graph Tests" $ do
     it "p ring > chain" $ do
       property propChain

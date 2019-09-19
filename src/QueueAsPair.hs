@@ -2,6 +2,24 @@ module QueueAsPair
   (Queue, newQueue, isEmptyQueue, enqueue, dequeue, front)
 where
 
+-- |
+-- >>> newQueue
+-- Q []
+-- >>> isEmptyQueue newQueue
+-- True
+-- >>> isEmptyQueue $ enqueue 13 newQueue
+-- False
+-- >>> isEmptyQueue $ dequeue $ enqueue 13 newQueue
+-- True
+-- >>> foldr enqueue newQueue "abcdef"
+-- Q "fedcba"
+-- >>> front $ foldr enqueue newQueue "abcdef"
+-- 'f'
+-- >>> dequeue $ foldr enqueue newQueue "abcdef"
+-- Q "edcba"
+-- >>> front $ dequeue $ foldr enqueue newQueue "abcdef"
+-- 'e'
+
 newQueue     :: Queue a
 isEmptyQueue :: Queue a -> Bool
 enqueue      :: a -> Queue a -> Queue a
